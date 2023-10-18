@@ -1,34 +1,83 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import { Button, Modal } from '@getalby/bitcoin-connect-react';
+import { ZapButton } from './components'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [connected, setConnected] = useState(false)
+
+  useEffect(() => {
+    window.addEventListener("bc:connected", () => {
+      setConnected(true)
+    });
+  }, [])
 
   return (
-    <>
+    <div className="p-6 max-w-3xl shadow-md rounded-lg border-2 mx-auto md:my-4 bg-gradient-to-tr from-gray-700 to-gray-600">
+      <Modal />
+      <div className="flex items-center justify-between w-full">
+        <h1 className="font-extrabold text-2xl bg-gradient-to-r from-violet-300 to-purple-300 bg-clip-text text-transparent">Zap Button <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Blog</span></h1>
+        <Button />
+      </div>
+      <hr className="my-4"/>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h2 className="font-extrabold text-xl text-white">Trending Posts today!</h2>
+        
+        <div className="mt-4 rounded-lg bg-white w-full py-6 px-8">
+          <h3 className="font-extrabold text-md">Bringing Zaps truly out of nostr</h3>
+          <p className="text-sm">By Roland Bewick</p>
+          <hr className="my-4"/>
+          <div>
+            Bitcoin ipsum dolor sit amet. Peer-to-peer double-spend problem to the moon, transaction SHA-256 cryptocurrency address blocksize! Consensus proof-of-work pizza decentralized electronic cash blockchain decentralized. Genesis block whitepaper peer-to-peer wallet digital signature hashrate blocksize electronic cash. Merkle Tree, money printer go brrrrr public key, soft fork money printer go brrrrr wallet SHA-256 transaction? To the moon genesis block.<br/><br/>
+            When lambo hodl blockchain digital signature SHA-256 whitepaper roller coaster block height. Digital signature stacking sats address space citadel freefall together stacking sats, hash, hashrate. Mining miner private key Bitcoin Improvement Proposal outputs soft fork hard fork mining. Transaction peer-to-peer, mining money printer go brrrrr few understand this inputs?
+          </div>
+          <hr className="my-4"/>
+          <div className="flex justify-between items-center w-full min-h-[40px]">
+            <ZapButton lnurl='rolznz@getalby.com' activate={connected}/>
+            <div className="flex flex-col items-end">
+              <p className="text-sm">Posted on</p>
+              <p className="font-extrabold text-sm">19th October, 2023</p>
+            </div>
+          </div>
+        </div>
+
+
+        <div className="mt-6 rounded-lg bg-white w-full py-6 px-8">
+          <h3 className="font-extrabold text-md">Awesome Nostr</h3>
+          <p className="text-sm">By Michael Bumann</p>
+          <hr className="my-4"/>
+          <div>
+            Bitcoin ipsum dolor sit amet. Peer-to-peer double-spend problem to the moon, transaction SHA-256 cryptocurrency address blocksize! Consensus proof-of-work pizza decentralized electronic cash blockchain decentralized. Genesis block whitepaper peer-to-peer wallet digital signature hashrate blocksize electronic cash. Merkle Tree, money printer go brrrrr public key, soft fork money printer go brrrrr wallet SHA-256 transaction? To the moon genesis block.<br/><br/>
+            When lambo hodl blockchain digital signature SHA-256 whitepaper roller coaster block height. Digital signature stacking sats address space citadel freefall together stacking sats, hash, hashrate. Mining miner private key Bitcoin Improvement Proposal outputs soft fork hard fork mining. Transaction peer-to-peer, mining money printer go brrrrr few understand this inputs?
+          </div>
+          <hr className="my-4"/>
+          <div className="flex justify-between items-center w-full min-h-[40px]">
+            <ZapButton lnurl='michael@getalby.com' activate={connected}/>
+            <div className="flex flex-col items-end">
+              <p className="text-sm">Posted on</p>
+              <p className="font-extrabold text-sm">16th October, 2023</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 rounded-lg bg-white w-full py-6 px-8">
+          <h3 className="font-extrabold text-md">Zap! Zap! Zap!</h3>
+          <p className="text-sm">By Adithya Vardhan</p>
+          <hr className="my-4"/>
+          <div>
+            Bitcoin ipsum dolor sit amet. Peer-to-peer double-spend problem to the moon, transaction SHA-256 cryptocurrency address blocksize! Consensus proof-of-work pizza decentralized electronic cash blockchain decentralized. Genesis block whitepaper peer-to-peer wallet digital signature hashrate blocksize electronic cash. Merkle Tree, money printer go brrrrr public key, soft fork money printer go brrrrr wallet SHA-256 transaction? To the moon genesis block.<br/><br/>
+            When lambo hodl blockchain digital signature SHA-256 whitepaper roller coaster block height. Digital signature stacking sats address space citadel freefall together stacking sats, hash, hashrate. Mining miner private key Bitcoin Improvement Proposal outputs soft fork hard fork mining. Transaction peer-to-peer, mining money printer go brrrrr few understand this inputs?
+          </div>
+          <hr className="my-4"/>
+          <div className="flex justify-between items-center w-full min-h-[40px]">
+            <ZapButton lnurl='adithya@getalby.com' activate={connected}/>
+            <div className="flex flex-col items-end">
+              <p className="text-sm">Posted on</p>
+              <p className="font-extrabold text-sm">9th October, 2023</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 

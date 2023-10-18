@@ -9,20 +9,26 @@ import * as packageJson from './package.json'
 export default defineConfig((configEnv) => ({
   plugins: [
     dts({
-      include: ['src/component/'],
+      include: ['src/components/'],
     }),
     react(),
     tsConfigPaths()
   ],
   build: {
     lib: {
-      entry: resolve('src', 'component/index.ts'),
+      entry: resolve('src', 'components/index.ts'),
       name: 'ZapButton',
       formats: ['es', 'umd'],
-      fileName: (format) => `boost-button.${format}.js`,
+      fileName: (format) => `zap-button.${format}.js`,
     },
     rollupOptions: {
       external: [...Object.keys(packageJson.peerDependencies)],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": 'ReactDOM'
+        }
+      }
     },
   },
 }))
