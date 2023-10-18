@@ -1,27 +1,59 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img width="100%" src="docs/header.png">
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# zap-button
 
-Currently, two official plugins are available:
+React component that allows you to integrate a zap button into your web application, and help zap people on nostr using their lightning address.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⚠️ Best used alongside [Bitcoin Connect](https://github.com/getAlby/bitcoin-connect)
 
-## Expanding the ESLint configuration
+## 🚀 Quick Start
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```
+npm install @getalby/zap-button
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## 🤙 Usage
+
+### `ZapButton`
+
+
+```jsx
+import React, { useEffect, useState } from 'react';
+import { Button, Modal } from '@getalby/bitcoin-connect-react';
+import { ZapButton } from 'zap-button';
+
+const MyComponent = () => {
+  const lnurl = 'hello@getalby.com';
+  const [connected, setConnected] = useState(false)
+
+  useEffect(() => {
+    window.addEventListener("bc:connected", () => {
+      setConnected(true)
+    });
+  }, [])
+
+  return (
+    <div>
+      <h1>My Zapping App</h1>
+      <div>
+        <Modal />
+        <Button />
+      </div>
+
+      <ZapButton lnurl={lnurl} activate={connected}/>
+    </div>
+  );
+};
+
+export default MyComponent;
+```
+
+And Zap Button component would be embedded like this:
+
+<img src="docs/zap-button.png" height="50">
+
+## Thanks
+
+@bigyanpoudel for https://github.com/bigyanpoudel/react-vite-library
