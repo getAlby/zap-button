@@ -1,23 +1,9 @@
-import { useEffect, useState } from 'react'
-import { Button, Modal } from '@getalby/bitcoin-connect-react';
 import { ZapButton } from './components'
 
 function App() {
-  const [connected, setConnected] = useState(false)
-
-  useEffect(() => {
-    window.addEventListener("bc:connected", () => {
-      setConnected(true)
-    });
-  }, [])
-
   return (
     <div className="p-6 max-w-3xl shadow-md rounded-lg border-2 mx-auto md:my-4 bg-gradient-to-tr from-gray-700 to-gray-600">
-      <Modal />
-      <div className="flex items-center justify-between w-full">
-        <h1 className="font-extrabold text-2xl bg-gradient-to-r from-violet-300 to-purple-300 bg-clip-text text-transparent">Zap Button <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Blog</span></h1>
-        <Button />
-      </div>
+      <h1 className="font-extrabold text-2xl bg-gradient-to-r from-violet-300 to-purple-300 bg-clip-text text-transparent">Zap Button <span className="bg-gradient-to-r from-amber-400 to-orange-400 bg-clip-text text-transparent">Blog</span></h1>
       <hr className="my-4"/>
       <div>
         <h2 className="font-extrabold text-xl text-white">Trending Posts today!</h2>
@@ -32,7 +18,7 @@ function App() {
           </div>
           <hr className="my-4"/>
           <div className="flex justify-between items-center w-full min-h-[40px]">
-            <ZapButton lnurl='rolznz@getalby.com' activate={connected}/>
+            <ZapButton lnurl='rolznz@getalby.com'/>
             <div className="flex flex-col items-end">
               <p className="text-sm">Posted on</p>
               <p className="font-extrabold text-sm">19th October, 2023</p>
@@ -51,7 +37,7 @@ function App() {
           </div>
           <hr className="my-4"/>
           <div className="flex justify-between items-center w-full min-h-[40px]">
-            <ZapButton lnurl='michael@getalby.com' activate={connected}/>
+            <ZapButton lnurl='michael@getalby.com'/>
             <div className="flex flex-col items-end">
               <p className="text-sm">Posted on</p>
               <p className="font-extrabold text-sm">16th October, 2023</p>
@@ -69,7 +55,7 @@ function App() {
           </div>
           <hr className="my-4"/>
           <div className="flex justify-between items-center w-full min-h-[40px]">
-            <ZapButton lnurl='adithya@getalby.com' activate={connected}/>
+            <ZapButton lnurl='adithya@getalby.com'/>
             <div className="flex flex-col items-end">
               <p className="text-sm">Posted on</p>
               <p className="font-extrabold text-sm">9th October, 2023</p>

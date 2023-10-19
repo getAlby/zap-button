@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { launchModal, Modal } from '@getalby/bitcoin-connect-react';
 import { LightningAddress } from "@getalby/lightning-tools";
 import {
   UnsignedEvent,
@@ -7,12 +8,14 @@ import {
   getPublicKey,
 } from "nostr-tools";
 
-import { GraphIcon, CheckIcon, Confirmations6Icon, AlertCircleIcon } from "@bitcoin-design/bitcoin-icons-react/filled";
+import { CheckIcon, GearIcon, GraphIcon } from "@bitcoin-design/bitcoin-icons-react/filled";
 import { LightningIcon, SatoshiV1Icon } from "@bitcoin-design/bitcoin-icons-react/outline";
+import LoadingAnimation from "./loadingAnimation";
 
 declare global {
   interface Window {
     nostr: any;
+    webln: any;
   }
 }
 
@@ -28,11 +31,10 @@ window.nostr = window.nostr || {
 
 export type ZapButtonProps = {
   lnurl: string;
-  activate: boolean;
 }
 
 export const ZapButton: React.FC<ZapButtonProps> = ({
-  lnurl, activate
+  lnurl
 }) => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
@@ -71,7 +73,6 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
   }, [open]);
 
   useEffect(() => {
-    if (!activate) return;
     const lnInstance = new LightningAddress(lnurl);
     async function loadLN() {
       await lnInstance.fetch();
@@ -79,14 +80,14 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
       setLn(lnInstance);
     }
     loadLN()
-  }, [lnurl, activate]);
+  }, [lnurl, window.webln]);
 
   const zap = async (satoshis: number) => {
     if (loading) return;
     setLoading(true);
     const zapArgs = {
       satoshi: satoshis,
-      comment: "Awesome post",
+      comment: "Zap Button!",
       relays: ["wss://relay.damus.io"]
     };
     try {
@@ -104,61 +105,67 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
   return (
     <>
       {/* add a class to say disabled if nwcUrl is null */}
-      {
-        activate ?
-          <div className="group relative flex items-center">
-            {!loading && <button className="group-hover:-left-7 left-0 ease-out delay-700 duration-300 absolute p-0.5 bg-gradient-to-tr from-violet-800 to-purple-500 hover:from-violet-900 hover:to-purple-500 rounded-full shadow-md">
-              <GraphIcon className="w-4 h-4 text-white" />
-            </button>}
+      <div className="group relative flex items-center">
+        {!loading && <button className="group-hover:-left-7 left-0 ease-out delay-700 duration-300 absolute p-0.5 bg-gradient-to-tr from-violet-800 to-purple-500 hover:from-violet-900 hover:to-purple-500 rounded-full shadow-md">
+          <GraphIcon className="w-4 h-4 text-white" />
+        </button>}
 
-            <button ref={buttonRef} className={`z-10 peer bg-gradient-to-tr from-violet-800 to-purple-500 hover:from-violet-900 hover:to-purple-500 rounded-full shadow-md p-1 bg-red-200`} onClick={() => {
-              setOpen(!open);
-              setCustom(false);
-              setAmount(0);
-            }}>
-              {loading ? <Confirmations6Icon className="w-8 h-8 text-white" /> : <LightningIcon className="w-8 h-8 text-white"/>}
-            </button>
+        {window.webln && <button onClick={launchModal} className={`group-hover:-bottom-7 bottom-0 left-2.5 ease-out delay-700 duration-300 absolute p-0.5 peer bg-gradient-to-tr from-blue-600 to-blue-400 hover:from-blue-900 hover:to-blue-500 rounded-full shadow-md`}>
+          <GearIcon className="w-4 h-4 text-white"/>
+        </button>}
 
-            {
-              open ? 
-                <div ref={optionsRef} className={`absolute left-10 transition flex gap-2 ml-2`}>
-                  <button className="flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => setCustom(true)}>
-                  {!custom ?
-                    "Custom"
-                    :
-                    <input
-                      ref={inputRef}
-                      onChange={handleInputChange}
-                      type="number"
-                      min="0"
-                      step="1"
-                      placeholder="Enter Amount"
-                      className="w-24 px-1 bg-gray-50 border border-gray-300 text-sm rounded-lg block focus:outline-none border-none text-white bg-white/10"
-                    />
-                  } <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
-                  </button>
-                  {custom && <button disabled={!amount} className="shrink-0	w-8 h-8 p-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(amount)}>
-                    <CheckIcon className="mx-auto w-5 h-5 text-orange-400" />
-                  </button>}
-                  {!custom && <>
-                    <button className="flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(10)}>
-                      10 <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
-                    </button>
-                    <button className="flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(100)}>
-                      100 <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
-                    </button>
-                    <button className="hidden sm:flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(1000)}>
-                      1000 <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
-                    </button>
-                  </>}
-                </div>
-              : null
-            }
-          </div>
-        : <button className={`z-10 peer bg-gradient-to-tr from-red-600 to-red-400 rounded-full shadow-md p-2`}>
-           <AlertCircleIcon className="w-6 h-6 text-white"/>
+        <button ref={buttonRef} className={`z-10 peer bg-gradient-to-tr from-violet-800 to-purple-500 hover:from-violet-900 hover:to-purple-500 rounded-full shadow-md p-1 bg-red-200`} onClick={() => {
+          if (!window.webln) {
+            launchModal();
+            return;
+          }
+          setOpen(!open);
+          setCustom(false);
+          setAmount(0);
+        }}>
+          <Modal />
+          {loading ? <LoadingAnimation className="w-8 h-8 text-white" /> : <LightningIcon className="w-8 h-8 text-white"/>}
         </button>
-      }
+
+        {
+          open ? 
+            <div ref={optionsRef} className={`absolute left-10 transition flex gap-2 ml-2`}>
+              <button className="flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => setCustom(true)}>
+              {!custom ?
+                "Custom"
+                :
+                <input
+                  ref={inputRef}
+                  onChange={handleInputChange}
+                  type="number"
+                  min="0"
+                  step="1"
+                  placeholder="Enter Amount"
+                  className="w-24 px-1 bg-gray-50 border border-gray-300 text-sm rounded-lg block focus:outline-none border-none text-white bg-white/10"
+                />
+              } <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
+              </button>
+              {custom && <button disabled={!amount} className="shrink-0	w-8 h-8 p-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(amount)}>
+                <CheckIcon className="mx-auto w-5 h-5 text-orange-400" />
+              </button>}
+              {!custom && <>
+                <button className="flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(10)}>
+                  10 <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
+                </button>
+                <button className="flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(100)}>
+                  100 <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
+                </button>
+                <button className="hidden sm:flex items-center h-8 px-2 py-0.5 bg-gradient-to-tr from-gray-800 to-gray-600 hover:from-gray-900 hover:to-gray-700 rounded-full shadow-xl text-white" onClick={() => zap(1000)}>
+                  1000 <SatoshiV1Icon className="ml-1 w-5 h-5 text-orange-400" />
+                </button>
+              </>}
+            </div>
+          : null
+        }
+      </div>
+      {/* <button onClick={launchModal} className={`z-10 peer bg-gradient-to-tr from-red-600 to-red-400 rounded-full shadow-md p-2`}>
+        <AlertCircleIcon className="w-6 h-6 text-white"/>
+      </button> */}
     </>
   )
 }
