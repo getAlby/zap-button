@@ -11,6 +11,7 @@ import {
 import { CheckIcon, GearIcon, GraphIcon } from "@bitcoin-design/bitcoin-icons-react/filled";
 import { LightningIcon, SatoshiV1Icon } from "@bitcoin-design/bitcoin-icons-react/outline";
 import LoadingAnimation from "./loadingAnimation";
+import ZapStats from "./zapStats";
 
 declare global {
   interface Window {
@@ -37,6 +38,7 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
   lnurl
 }) => {
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState(false);
   const [open, setOpen] = useState(false);
   const [custom, setCustom] = useState(false);
   const [amount, setAmount] = useState(0);
@@ -80,7 +82,7 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
       setLn(lnInstance);
     }
     loadLN()
-  }, [lnurl, window.webln]);
+  }, [lnurl]);
 
   const zap = async (satoshis: number) => {
     if (loading) return;
@@ -92,6 +94,7 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
     };
     try {
       const response = await ln?.zap(zapArgs);
+      window.alert("Zap successful!");
       console.log(response.preimage);
     } catch (error) {
       window.alert("Couldn't zap! Check console for more details.");
@@ -106,11 +109,13 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
     <>
       {/* add a class to say disabled if nwcUrl is null */}
       <div className="group relative flex items-center">
-        {!loading && <button className="group-hover:-left-7 left-0 ease-out delay-700 duration-300 absolute p-0.5 bg-gradient-to-tr from-violet-800 to-purple-500 hover:from-violet-900 hover:to-purple-500 rounded-full shadow-md">
+        {stats && <ZapStats pubkey={ln?.nostrPubkey} setStats={setStats}/>}
+
+        {!loading && <button onClick={() => setStats(true)} className="group-hover:-left-7 left-0 ease-out delay-700 duration-300 absolute p-0.5 bg-gradient-to-tr from-violet-800 to-purple-500 hover:from-violet-900 hover:to-purple-500 rounded-full shadow-md">
           <GraphIcon className="w-4 h-4 text-white" />
         </button>}
 
-        {window.webln && <button onClick={launchModal} className={`group-hover:-bottom-7 bottom-0 left-2.5 ease-out delay-700 duration-300 absolute p-0.5 peer bg-gradient-to-tr from-blue-600 to-blue-400 hover:from-blue-900 hover:to-blue-500 rounded-full shadow-md`}>
+        {false && <button onClick={launchModal} className={`group-hover:-bottom-7 bottom-0 left-2.5 ease-out delay-700 duration-300 absolute p-0.5 peer bg-gradient-to-tr from-blue-600 to-blue-400 hover:from-blue-900 hover:to-blue-500 rounded-full shadow-md`}>
           <GearIcon className="w-4 h-4 text-white"/>
         </button>}
 

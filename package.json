@@ -43,6 +43,7 @@
     "@bitcoin-design/bitcoin-icons-react": "^0.1.10",
     "@getalby/bitcoin-connect-react": "^2.0.0",
     "@getalby/lightning-tools": "^4.0.2",
+    "nostr-hooks": "^1.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "vite": "^4.3.9"

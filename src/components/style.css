@@ -548,12 +548,28 @@ input[type="number"]::-webkit-inner-spin-button,
   visibility: collapse;
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
 
 .relative {
   position: relative;
+}
+
+.inset-0 {
+  inset: 0px;
+}
+
+.-bottom-0 {
+  bottom: -0px;
+}
+
+.-bottom-7 {
+  bottom: -1.75rem;
 }
 
 .-left-6 {
@@ -568,48 +584,20 @@ input[type="number"]::-webkit-inner-spin-button,
   left: -2rem;
 }
 
-.left-0 {
-  left: 0px;
-}
-
-.left-10 {
-  left: 2.5rem;
-}
-
-.left-20 {
-  left: 5rem;
-}
-
-.left-7 {
-  left: 1.75rem;
+.-top-0 {
+  top: -0px;
 }
 
 .bottom-0 {
   bottom: 0px;
 }
 
-.-bottom-0 {
-  bottom: -0px;
+.left-0 {
+  left: 0px;
 }
 
-.top-0 {
-  top: 0px;
-}
-
-.-top-0 {
-  top: -0px;
-}
-
-.bottom-\[unset\] {
-  bottom: unset;
-}
-
-.top-\[unset\] {
-  top: unset;
-}
-
-.-bottom-7 {
-  bottom: -1.75rem;
+.left-10 {
+  left: 2.5rem;
 }
 
 .left-2 {
@@ -620,8 +608,24 @@ input[type="number"]::-webkit-inner-spin-button,
   left: 0.625rem;
 }
 
+.left-20 {
+  left: 5rem;
+}
+
+.left-7 {
+  left: 1.75rem;
+}
+
+.top-0 {
+  top: 0px;
+}
+
 .z-10 {
   z-index: 10;
+}
+
+.z-50 {
+  z-index: 50;
 }
 
 .mx-auto {
@@ -663,6 +667,10 @@ input[type="number"]::-webkit-inner-spin-button,
   margin-top: 1.5rem;
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
 .block {
   display: block;
 }
@@ -685,6 +693,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .hidden {
   display: none;
+}
+
+.h-10 {
+  height: 2.5rem;
 }
 
 .h-12 {
@@ -719,12 +731,28 @@ input[type="number"]::-webkit-inner-spin-button,
   height: 2rem;
 }
 
+.max-h-80 {
+  max-height: 20rem;
+}
+
 .min-h-\[40px\] {
   min-height: 40px;
 }
 
+.min-h-\[4rem\] {
+  min-height: 4rem;
+}
+
+.min-h-\[10rem\] {
+  min-height: 10rem;
+}
+
 .w-1 {
   width: 0.25rem;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .w-12 {
@@ -761,6 +789,18 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .w-full {
   width: 100%;
+}
+
+.w-\[650px\] {
+  width: 650px;
+}
+
+.w-\[700px\] {
+  width: 700px;
+}
+
+.min-w-\[512px\] {
+  min-width: 512px;
 }
 
 .max-w-2xl {
@@ -819,12 +859,24 @@ input[type="number"]::-webkit-inner-spin-button,
   align-items: center;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
 .justify-between {
   justify-content: space-between;
 }
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
+.rounded {
+  border-radius: 0.25rem;
 }
 
 .rounded-full {
@@ -874,6 +926,11 @@ input[type="number"]::-webkit-inner-spin-button,
 .bg-gray-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.bg-gray-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
 .bg-red-200 {
@@ -1138,6 +1195,11 @@ input[type="number"]::-webkit-inner-spin-button,
   padding-right: 0.5rem;
 }
 
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
 .px-8 {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -1183,6 +1245,10 @@ input[type="number"]::-webkit-inner-spin-button,
   line-height: 1.75rem;
 }
 
+.font-bold {
+  font-weight: 700;
+}
+
 .font-extrabold {
   font-weight: 800;
 }
@@ -1213,6 +1279,10 @@ input[type="number"]::-webkit-inner-spin-button,
 
 .underline {
   text-decoration-line: underline;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .shadow {
@@ -1325,28 +1395,12 @@ input[type="number"]::-webkit-inner-spin-button,
   outline-offset: 2px;
 }
 
-.group:hover .group-hover\:-left-7 {
-  left: -1.75rem;
-}
-
-.group:hover .group-hover\:-bottom-0 {
-  bottom: -0px;
-}
-
-.group:hover .group-hover\:-bottom-0\.5 {
-  bottom: -0.125rem;
-}
-
-.group:hover .group-hover\:-top-0 {
-  top: -0px;
-}
-
-.group:hover .group-hover\:-top-0\.5 {
-  top: -0.125rem;
-}
-
 .group:hover .group-hover\:-bottom-7 {
   bottom: -1.75rem;
+}
+
+.group:hover .group-hover\:-left-7 {
+  left: -1.75rem;
 }
 
 @media (min-width: 640px) {
@@ -1359,5 +1413,12 @@ input[type="number"]::-webkit-inner-spin-button,
   .md\:my-4 {
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
