@@ -19,7 +19,7 @@ declare global {
 const nostrPrivateKey = generatePrivateKey();
 const nostrPublicKey = getPublicKey(nostrPrivateKey);
 
-window.nostr = {
+window.nostr = window.nostr || {
   getPublicKey: () => Promise.resolve(nostrPublicKey),
   signEvent: (event: UnsignedEvent) => {
     return Promise.resolve(finishEvent(event, nostrPrivateKey));
@@ -35,7 +35,7 @@ export const ZapButton: React.FC<ZapButtonProps> = ({
   lnurl, activate
 }) => {
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [custom, setCustom] = useState(false);
   const [amount, setAmount] = useState(0);
   const [ln, setLn] = useState<LightningAddress | null>(null);
